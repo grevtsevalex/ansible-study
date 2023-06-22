@@ -1,0 +1,21 @@
+- hosts: webservers
+
+  tasks:
+    
+    - name: remove redis server
+      ansible.builtin.apt:
+        name: redis-server
+        state: absent
+      become: yes
+      tags: system
+
+    - name: remove users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: absent
+      loop:
+         - arya
+         - sansa
+         - tirion
+      become: yes
+      tags: users

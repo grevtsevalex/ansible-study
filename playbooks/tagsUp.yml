@@ -1,0 +1,26 @@
+- hosts: webservers
+
+  tasks:
+    - name: update cache
+      ansible.builtin.apt:
+        update_cache: yes
+      become: yes
+      tags: system
+
+    - name: install redis-server
+      ansible.builtin.apt:
+        name: redis-server
+        state: present
+      become: yes
+      tags: system
+    
+    - name: create users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - arya
+        - sansa
+        - tirion
+      become: yes
+      tags: users
