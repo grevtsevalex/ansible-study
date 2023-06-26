@@ -1,0 +1,9 @@
+ - hosts: webservers
+
+   tasks:
+     - name: remove nginx
+       ansible.builtin.apt:
+         name: nginx
+         state: absent
+       become: yes
+
