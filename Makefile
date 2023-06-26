@@ -1,2 +1,2 @@
 ping:
-	ansible all -i inventory.ini -m ping	
+	ansible webservers -i inventory.ini -m ping	
