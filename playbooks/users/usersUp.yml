@@ -1,0 +1,40 @@
+- hosts: webservers
+  gather_facts: no
+  vars:
+    users:
+      - jaime
+      - sansa
+      - robert
+  tasks:
+    - name: create users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+      become: yes 
+      loop: "{{ users }}"
+
+    - name: create git config
+      ansible.builtin.template:
+        src: files/gitconfig.j2
+        dest: "/home/{{ item }}/.gitconfig"
+      become: yes
+      loop: "{{ users }}"
+
+    - name: create ssh dir
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        mode: 0700
+      loop: "{{ users }}"
+      become: yes
+
+    - name: copy ssh key
+      ansible.builtin.copy:
+        src: "files/id_rsa.pub"
+        dest: "/home/{{ item }}/.ssh/authorized_keys"
+        owner: "{{ item }}"
+        mode: 0600
+      loop: "{{ users }}"
+      become: yes

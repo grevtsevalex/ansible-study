@@ -1,0 +1,16 @@
+ - hosts: webservers
+   gather_facts: no
+   vars:
+     - users:
+         - jaime
+         - sansa
+         - robert
+
+   tasks:
+     - name: remove users
+       ansible.builtin.user:
+         name: "{{ item }}"
+         state: absent
+         remove: yes
+       become: yes
+       loop: "{{ users }}"
