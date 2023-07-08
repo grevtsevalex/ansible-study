@@ -1,0 +1,8 @@
+- hosts: webservers
+
+  tasks:
+    - name: set SSH to server
+      ansible.posix.authorized_key:
+        user: grevtsevalex
+        state: present
+        key: "{{ lookup('file', '/home/grevtsevalex/.ssh/id_rsa.pub') }}"
