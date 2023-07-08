@@ -1,0 +1,15 @@
+ - hosts: webservers
+
+   tasks:
+     - name: debug message
+       ansible.builtin.debug:
+         msg: mainPlaybook
+    
+ - name: import git playbook
+   ansible.builtin.import_playbook: gitUp.yml
+
+ - name: import users playbook
+   ansible.builtin.import_playbook: ./users/usersUp.yml
+
+ - name: import server playbook
+   ansible.builtin.import_playbook: ./nginx-server/upServer.yml 

@@ -1,0 +1,4 @@
+- hosts: webservers
+  roles:
+    - role: geerlingguy.nodejs
+      become: yes

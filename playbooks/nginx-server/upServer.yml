@@ -4,11 +4,17 @@
       nginx_port: 80
 
     tasks:
-      - name: install nginx
+      - name: install packages (nginx, cowsay)
         ansible.builtin.apt:
-          name: nginx
+          name:
+            - nginx
+            - cowsay
           state: latest
         become: yes
+
+      - name: register cowsay result
+        ansible.builtin.shell: cowsay "This is {{ server_name }}" 
+        register: cowsay_result
 
       - name: create root dir
         ansible.builtin.file:
